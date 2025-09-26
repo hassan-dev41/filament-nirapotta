@@ -1,14 +1,15 @@
 <?php
 
-namespace HassanDev41\FilamentNirapotta\Filament\Resources;
+namespace Frentors\FilamentNirapotta\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Spatie\Permission\Models\Role;
-use HassanDev41\FilamentNirapotta\Filament\Resources\RoleResource\Pages;
+use Frentors\FilamentNirapotta\Models\Role;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class RoleResource extends Resource
 {
@@ -18,7 +19,7 @@ class RoleResource extends Resource
 
     protected static ?string $navigationGroup = 'User Management';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -30,16 +31,14 @@ class RoleResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
-                        Forms\Components\TextInput::make('guard_name')
-                            ->required()
-                            ->default('web')
-                            ->maxLength(255),
-                        Forms\Components\Textarea::make('description')
+                        Forms\Components\TextInput::make('description')
                             ->maxLength(255),
                         Forms\Components\CheckboxList::make('permissions')
                             ->relationship('permissions', 'name')
-                            ->columns(3)
                             ->searchable()
+                            ->columns(3)
+                            ->helperText('Select the permissions for this role')
+                            ->required(),
                     ])
             ]);
     }
@@ -48,21 +47,10 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('guard_name')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('description')
-                    ->searchable()
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('permissions_count')
-                    ->counts('permissions')
-                    ->label('Permissions')
-                    ->sortable(),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -86,19 +74,17 @@ class RoleResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRoles::route('/'),
-            'create' => Pages\CreateRole::route('/create'),
-            'edit' => Pages\EditRole::route('/{record}/edit'),
+            'index' => \Frentors\FilamentNirapotta\Filament\Resources\RoleResource\Pages\ListRoles::class,
+            'create' => \Frentors\FilamentNirapotta\Filament\Resources\RoleResource\Pages\CreateRole::class,
+            'edit' => \Frentors\FilamentNirapotta\Filament\Resources\RoleResource\Pages\EditRole::class,
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('guard_name', config('filament-nirapotta.guard_name'));
     }
 }

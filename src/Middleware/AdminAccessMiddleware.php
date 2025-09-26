@@ -1,6 +1,6 @@
 <?php
 
-namespace HassanDev41\FilamentNirapotta\Middleware;
+namespace Frentors\FilamentNirapotta\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -17,15 +17,10 @@ class AdminAccessMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // Check if user is authenticated with admin guard
-        if (!Auth::guard('admin')->check()) {
-            return redirect()->route('login');
-        }
+        $user = Auth::user();
 
-        // Check if user has admin access permission
-        $user = Auth::guard('admin')->user();
-        if (!$user->hasPermissionTo(config('filament-nirapotta.admin_permission'))) {
-            abort(403, 'Unauthorized access');
+        if (!$user || !$user->hasRole('admin')) {
+            abort(403, 'Unauthorized access.');
         }
 
         return $next($request);

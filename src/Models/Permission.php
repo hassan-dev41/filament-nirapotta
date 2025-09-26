@@ -1,18 +1,17 @@
 <?php
 
-namespace Zeus\Permission\Models;
+namespace Frentors\FilamentNirapotta\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Permission\Contracts\Permission as PermissionContract;
-use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Permission as SpatiePermission;
 
-class Permission extends Model implements PermissionContract
+class Permission extends SpatiePermission
 {
-    use HasRoles;
-
-    protected $guarded = [];
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
     protected $fillable = [
         'name',
         'guard_name',
@@ -20,15 +19,20 @@ class Permission extends Model implements PermissionContract
     ];
 
     /**
-     * Get roles that have this permission
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
      */
-    public function roles(): BelongsToMany
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * Get the table associated with the model.
+     */
+    public function getTable(): string
     {
-        return $this->belongsToMany(
-            config('permission.models.role'),
-            config('permission.table_names.role_has_permissions'),
-            'permission_id',
-            'role_id'
-        );
+        return config('permission.table_names.permissions', parent::getTable());
     }
 }

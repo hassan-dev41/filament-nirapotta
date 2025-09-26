@@ -1,18 +1,16 @@
 <?php
 
-namespace Zeus\Permission\Models;
+namespace Frentors\FilamentNirapotta\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Permission\Contracts\Role as RoleContract;
-use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Models\Role as SpatieRole;
 
-class Role extends Model implements RoleContract
+class Role extends SpatieRole
 {
-    use HasPermissions;
-
-    protected $guarded = [];
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
     protected $fillable = [
         'name',
         'guard_name',
@@ -20,29 +18,20 @@ class Role extends Model implements RoleContract
     ];
 
     /**
-     * Get permissions assigned to this role
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
      */
-    public function permissions(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            config('permission.models.permission'),
-            config('permission.table_names.role_has_permissions'),
-            'role_id',
-            'permission_id'
-        );
-    }
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     /**
-     * Get users assigned to this role
+     * Get the table associated with the model.
      */
-    public function users(): BelongsToMany
+    public function getTable(): string
     {
-        return $this->morphedByMany(
-            getModelForGuard($this->attributes['guard_name'] ?? config('auth.defaults.guard')),
-            'model',
-            config('permission.table_names.model_has_roles'),
-            'role_id',
-            config('permission.column_names.model_morph_key')
-        );
+        return config('permission.table_names.roles', parent::getTable());
     }
 }

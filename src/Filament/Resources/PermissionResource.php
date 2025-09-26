@@ -5,17 +5,22 @@ namespace HassanDev41\FilamentNirapotta\Filament\Resources;
 use HassanDev41\FilamentNirapotta\Filament\Resources\PermissionResource\Pages;
 use Spatie\Permission\Models\Permission;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Support\Enums\IconPosition;
+use Filament\Support\Icons\Heroicon;
+use BackedEnum;
 
 class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
     
-    protected static ?string $navigationIcon = 'heroicon-o-key';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
+    
+    protected static ?IconPosition $navigationIconPosition = IconPosition::Before;
     
     protected static ?int $navigationSort = 2;
     
@@ -24,7 +29,7 @@ class PermissionResource extends Resource
         return config('filament-nirapotta.navigation_group', 'User Management');
     }
     
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([
