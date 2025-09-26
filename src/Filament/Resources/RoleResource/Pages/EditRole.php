@@ -1,8 +1,8 @@
 <?php
 
-namespace Frentors\FilamentNirapotta\Filament\Resources\RoleResource\Pages;
+namespace HassanDev41\FilamentNirapotta\Filament\Resources\RoleResource\Pages;
 
-use Frentors\FilamentNirapotta\Filament\Resources\RoleResource;
+use HassanDev41\FilamentNirapotta\Filament\Resources\RoleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Frentors\FilamentNirapotta\Commands;
+namespace HassanDev41\FilamentNirapotta\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Frentors\FilamentNirapotta\Models\Permission;
+use HassanDev41\FilamentNirapotta\Models\Permission;
 
 class InstallAdminPermission extends Command
 {
@@ -89,7 +89,7 @@ class InstallAdminPermission extends Command
                 if (!in_array($permissionName, $existingPermissions)) {
                     Permission::create([
                         'name' => $permissionName,
-                        'description' => $description,
+                        'slug' => Str::slug($permissionName),
                         'guard_name' => $guard,
                     ]);
 

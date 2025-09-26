@@ -1,28 +1,29 @@
 {
-    "name": "frentors/filament-nirapotta",
-    "description": "A role and permission management system for Filament Admin Panel",
+    "name": "hassan-dev41/filament-nirapotta",
+    "description": "Role and permission management for FilamentPHP using Spatie Permission",
     "type": "library",
     "license": "MIT",
+    "version": "1.0.1",
     "autoload": {
         "psr-4": {
-            "Frentors\\FilamentNirapotta\\": "src/"
+            "HassanDev41\\FilamentNirapotta\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "Frentors",
-            "email": "support@frentors.com"
+            "name": "Mohammad Hassan",
+            "email": "devhassan41@gmail.com"
         }
     ],
     "require": {
         "php": "^8.2",
-        "filament/filament": "^3.0",
+        "filament/filament": "^4.0",
         "spatie/laravel-permission": "^6.0"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Frentors\\FilamentNirapotta\\Providers\\FilamentNirapottaServiceProvider"
+                "HassanDev41\\FilamentNirapotta\\Providers\\FilamentNirapottaServiceProvider"
             ]
         }
     },

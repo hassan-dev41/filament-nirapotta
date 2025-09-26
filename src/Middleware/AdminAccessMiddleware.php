@@ -1,6 +1,6 @@
 <?php
 
-namespace Frentors\FilamentNirapotta\Middleware;
+namespace HassanDev41\FilamentNirapotta\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

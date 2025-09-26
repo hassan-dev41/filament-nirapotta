@@ -1,6 +1,6 @@
 <?php
 
-namespace Frentors\FilamentNirapotta\Providers;
+namespace HassanDev41\FilamentNirapotta\Providers;
 
 use Filament\Facades\Filament;
 use Illuminate\Support\ServiceProvider;
@@ -32,13 +32,13 @@ class FilamentNirapottaServiceProvider extends ServiceProvider
         // Register commands
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Frentors\FilamentNirapotta\Commands\InstallAdminPermission::class,
+                \HassanDev41\FilamentNirapotta\Commands\InstallAdminPermission::class,
             ]);
         }
 
         // Register Resources
         Filament::registerResources([
-            \Frentors\FilamentNirapotta\Filament\Resources\RoleResource::class,
+            \HassanDev41\FilamentNirapotta\Filament\Resources\RoleResource::class,
         ]);
 
         // Clear permission cache on boot

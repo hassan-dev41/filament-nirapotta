@@ -1,6 +1,6 @@
 <?php
 
-namespace Frentors\FilamentNirapotta\Models;
+namespace HassanDev41\FilamentNirapotta\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Permission as SpatiePermission;
@@ -14,8 +14,8 @@ class Permission extends SpatiePermission
      */
     protected $fillable = [
         'name',
+        'slug',
         'guard_name',
-        'description',
     ];
 
     /**

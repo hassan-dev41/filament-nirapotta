@@ -1,13 +1,13 @@
 <?php
 
-namespace Frentors\FilamentNirapotta\Filament\Resources;
+namespace HassanDev41\FilamentNirapotta\Filament\Resources;
 
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Frentors\FilamentNirapotta\Models\Role;
+use HassanDev41\FilamentNirapotta\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,15 +15,27 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
-
-    protected static ?string $navigationGroup = 'User Management';
-
     protected static ?int $navigationSort = 2;
 
-    public static function form(Form $form): Form
+    /**
+     * Get the navigation icon for this resource.
+     */
+    public static function getNavigationIcon(): ?string
     {
-        return $form
+        return 'heroicon-o-shield-check';
+    }
+
+    /**
+     * Get the navigation group for this resource.
+     */
+    public static function getNavigationGroup(): ?string
+    {
+        return config('filament-nirapotta.navigation_group', 'User Management');
+    }
+
+    public static function form(Schema $schema): Schema
+    {
+        return $schema
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
@@ -31,8 +43,6 @@ class RoleResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
-                        Forms\Components\TextInput::make('description')
-                            ->maxLength(255),
                         Forms\Components\CheckboxList::make('permissions')
                             ->relationship('permissions', 'name')
                             ->searchable()
@@ -48,8 +58,6 @@ class RoleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -77,9 +85,9 @@ class RoleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \Frentors\FilamentNirapotta\Filament\Resources\RoleResource\Pages\ListRoles::class,
-            'create' => \Frentors\FilamentNirapotta\Filament\Resources\RoleResource\Pages\CreateRole::class,
-            'edit' => \Frentors\FilamentNirapotta\Filament\Resources\RoleResource\Pages\EditRole::class,
+            'index' => \HassanDev41\FilamentNirapotta\Filament\Resources\RoleResource\Pages\ListRoles::class,
+            'create' => \HassanDev41\FilamentNirapotta\Filament\Resources\RoleResource\Pages\CreateRole::class,
+            'edit' => \HassanDev41\FilamentNirapotta\Filament\Resources\RoleResource\Pages\EditRole::class,
         ];
     }
 
